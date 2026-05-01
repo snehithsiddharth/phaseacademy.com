@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHASE Educational Institute</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#050505;color:#fff}
+header{display:flex;justify-content:space-between;padding:20px 60px;position:fixed;width:100%;background:rgba(0,0,0,0.6);z-index:1000}
+header h1{color:#00eaff}
+nav a{margin-left:20px;color:#ccc;text-decoration:none}
+nav a:hover{color:#fff}
+
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.hero h2{font-size:3rem}
+.btn{margin-top:20px;padding:12px 30px;background:#00eaff;border:none;border-radius:25px;cursor:pointer}
+
+.section{padding:80px 20px;text-align:center}
+.cards{display:flex;justify-content:center;flex-wrap:wrap;gap:20px}
+.card{background:#111;padding:20px;border-radius:15px;width:250px}
+
+.stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.stat{font-size:2rem}
+
+form{max-width:400px;margin:auto}
+input,button{width:100%;padding:10px;margin:10px 0;border:none;border-radius:10px}
+input{background:#222;color:#fff}
+
+.dashboard{display:none;padding:20px;background:#111;border-radius:15px;margin-top:20px}
+
+canvas{position:fixed;top:0;left:0;z-index:-1}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>PHASE</h1>
+<nav>
+<a href="#">Home</a>
+<a href="#results">Results</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+<h2>Crack JEE & NEET</h2>
+<button class="btn" onclick="scrollToForm()">Enroll Now</button>
+</section>
+
+<section class="section" id="results">
+<h2>Top Results</h2>
+<div class="cards">
+<div class="card"><h3>AIR 12</h3><p>JEE Advanced</p></div>
+<div class="card"><h3>AIR 45</h3><p>NEET</p></div>
+<div class="card"><h3>AIR 102</h3><p>JEE Main</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>Our Impact</h2>
+<div class="stats">
+<div class="stat" id="s1">0+</div>
+<div class="stat" id="s2">0+</div>
+<div class="stat" id="s3">0+</div>
+</div>
+</section>
+
+<section class="section" id="contact">
+<h2>Enroll Form</h2>
+<form onsubmit="handleForm(event)">
+<input type="text" placeholder="Name" required>
+<input type="email" placeholder="Email" required>
+<input type="tel" placeholder="Phone" required>
+<button type="submit">Submit</button>
+</form>
+
+<div class="dashboard" id="dashboard">
+<h3>Welcome Student 🎓</h3>
+<p>Your application is received.</p>
+</div>
+
+<p>📞 9849627363</p>
+<p>📧 phaseeducationalinstitute@gmail.com</p>
+</section>
+
+<script>
+function scrollToForm(){document.getElementById('contact').scrollIntoView({behavior:'smooth'})}
+
+function handleForm(e){
+e.preventDefault();
+document.getElementById('dashboard').style.display='block';
+}
+
+// Animated stats
+let count1=0,count2=0,count3=0;
+let i=setInterval(()=>{
+if(count1<5000){count1+=50;document.getElementById('s1').innerText=count1+'+ Students';}
+if(count2<300){count2+=5;document.getElementById('s2').innerText=count2+'+ Selections';}
+if(count3<50){count3++;document.getElementById('s3').innerText=count3+'+ AIR Ranks';}
+if(count1>=5000 && count2>=300 && count3>=50)clearInterval(i);
+},50);
+
+// 3D
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const geometry=new THREE.IcosahedronGeometry(6);
+const material=new THREE.MeshBasicMaterial({color:0x00eaff,wireframe:true});
+const shape=new THREE.Mesh(geometry,material);
+scene.add(shape);
+
+camera.position.z=20;
+
+function animate(){
+requestAnimationFrame(animate);
+shape.rotation.x+=0.01;
+shape.rotation.y+=0.01;
+renderer.render(scene,camera);
+}
+animate();
+</script>
+
+</body>
+</html>
